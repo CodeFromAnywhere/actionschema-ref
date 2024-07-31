@@ -1,5 +1,91 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
-<body>Hello, world. Please visit <a href=https://github.com/CodeFromAnywhere/actionschema-spec>the repo</a></body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActionSchema Spec Repository</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hljs {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col h-screen">
+    <header class="bg-blue-600 text-white py-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl font-bold">ActionSchema Spec</h1>
+            <p class="text-sm">A simplified approach to describing API functionality</p>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <nav class="bg-gray-800 text-white w-64 p-4 overflow-y-auto">
+            <h2 class="text-xl font-semibold mb-4">Files</h2>
+            <ul id="fileList" class="space-y-2">
+                <!-- File items will be dynamically inserted here -->
+            </ul>
+        </nav>
+
+        <main class="flex-1 p-4 overflow-y-auto">
+            <section id="fileContent">
+                <h2 id="fileName" class="text-2xl font-semibold mb-4">Select a file to view its content</h2>
+                <pre><code id="fileContentCode" class="language-json"></code></pre>
+            </section>
+        </main>
+    </div>
+
+    <footer class="bg-gray-200 py-2 text-center text-gray-600 text-sm">
+        <p>&copy; 2023 ActionSchema Spec. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const files = [
+            { name: 'actionschema.json', path: '/actionschema.json' },
+            { name: 'flat-object.json', path: '/flat-object.json' },
+            { name: 'openapi.json', path: '/openapi.json' },
+            { name: 'simplified-openapi.json', path: '/simplified-openapi.json' },
+        ];
+
+        const fileList = document.getElementById('fileList');
+        const fileName = document.getElementById('fileName');
+        const fileContentCode = document.getElementById('fileContentCode');
+
+        files.forEach(file => {
+            const fileItem = document.createElement('li');
+            fileItem.className = 'cursor-pointer hover:bg-gray-700 p-2 rounded';
+            fileItem.textContent = file.name;
+            fileItem.addEventListener('click', () => fetchFileContent(file));
+            fileList.appendChild(fileItem);
+        });
+
+        async function fetchFileContent(file) {
+            try {
+                const response = await fetch(file.path);
+                const content = await response.text();
+
+                fileName.textContent = file.name;
+                fileContentCode.textContent = content;
+
+                hljs.highlightElement(fileContentCode);
+            } catch (error) {
+                console.error('Error fetching file:', error);
+                fileName.textContent = 'Error';
+                fileContentCode.textContent = 'Error fetching file. Please try again.';
+            }
+        }
+    </script>
+</body>
 
 </html>
