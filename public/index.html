@@ -5,56 +5,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ActionSchema Spec Repository</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.2.12/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        header p {
+            font-size: 0.875rem;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        nav {
+            background-color: #1f2937;
+            color: white;
+            width: 16rem;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        nav h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        nav ul {
+            list-style-type: none;
+        }
+
+        nav li {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        nav li:hover {
+            background-color: #374151;
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        #fileName {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background-color: #e5e7eb;
+            padding: 0.5rem;
+            text-align: center;
+            color: #4b5563;
+            font-size: 0.875rem;
         }
 
         .hljs {
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            nav {
+                width: 100%;
+                max-height: 30vh;
+            }
+
+            main {
+                flex: 1;
+            }
+        }
     </style>
 </head>
 
-<body class="bg-gray-100 flex flex-col h-screen">
-    <header class="bg-blue-600 text-white py-4">
-        <div class="container mx-auto px-4">
-            <h1 class="text-2xl font-bold">ActionSchema Spec</h1>
-            <p class="text-sm">A simplified approach to describing API functionality</p>
-        </div>
+<body>
+    <header>
+        <h1>ActionSchema Spec</h1>
+        <p>A simplified approach to describing API functionality</p>
     </header>
 
-    <div class="flex flex-1 overflow-hidden">
-        <nav class="bg-gray-800 text-white w-64 p-4 overflow-y-auto">
-            <h2 class="text-xl font-semibold mb-4">Files</h2>
-            <ul id="fileList" class="space-y-2">
+    <div class="content-wrapper">
+        <nav>
+            <h2>Files</h2>
+            <ul id="fileList">
                 <!-- File items will be dynamically inserted here -->
             </ul>
         </nav>
 
-        <main class="flex-1 p-4 overflow-y-auto">
+        <main>
             <section id="fileContent">
-                <h2 id="fileName" class="text-2xl font-semibold mb-4">README.md</h2>
+                <h2 id="fileName">README.html</h2>
                 <div id="fileContentHtml"></div>
                 <pre><code id="fileContentCode" class="language-json"></code></pre>
             </section>
         </main>
     </div>
 
-    <footer class="bg-gray-200 py-2 text-center text-gray-600 text-sm">
+    <footer>
         <p>&copy; 2023 ActionSchema Spec. All rights reserved.</p>
     </footer>
 
     <script>
         const files = [
-            { name: 'README.md', path: '/README.md' },
+            { name: 'README.html', path: '/README.html' },
             { name: 'actionschema.json', path: '/actionschema.json' },
             { name: 'flat-object.json', path: '/flat-object.json' },
             { name: 'openapi.json', path: '/openapi.json' },
@@ -68,7 +160,6 @@
 
         files.forEach(file => {
             const fileItem = document.createElement('li');
-            fileItem.className = 'cursor-pointer hover:bg-gray-700 p-2 rounded';
             fileItem.textContent = file.name;
             fileItem.addEventListener('click', () => fetchFileContent(file));
             fileList.appendChild(fileItem);
@@ -81,8 +172,10 @@
 
                 fileName.textContent = file.name;
 
-                if (file.name.endsWith('.md')) {
-                    fileContentHtml.innerHTML = marked.parse(content);
+                if (file.name === 'README.html') {
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(content, 'text/html');
+                    fileContentHtml.innerHTML = htmlDoc.body.innerHTML;
                     fileContentHtml.style.display = 'block';
                     fileContentCode.style.display = 'none';
                 } else {
@@ -100,7 +193,7 @@
             }
         }
 
-        // Fetch README.md on page load
+        // Fetch README.html on page load
         fetchFileContent(files[0]);
     </script>
 </body>
