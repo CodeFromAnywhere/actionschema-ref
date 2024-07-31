@@ -1,6 +1,5 @@
 import * as yaml from "yaml";
 import { marked } from "marked";
-import TurndownService from "turndown";
 
 export const config = {
   matcher: ["/:path*.json", "/:path*.yaml", "/:path*.html"],
@@ -26,11 +25,9 @@ const convertFormat = async (
     return JSON.stringify(data, null, 2);
   } else if (fromFormat === "md" && toFormat === "html") {
     return marked(data);
-  } else {
-    const turndownService = new TurndownService();
-    const markdown = turndownService.turndown(data);
-    return markdown;
   }
+  // For html to md, we don't implement conversion here as it's more complex
+  throw new Error(`Unsupported conversion from ${fromFormat} to ${toFormat}`);
 };
 
 const parseContent = (content: string, format: SupportedFormat): any => {
