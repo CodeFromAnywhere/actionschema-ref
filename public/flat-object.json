@@ -1,0 +1,32 @@
+{
+  "$schema": "https://spec.actionschema.com/actionschema.json",
+  "description": "A datastructure that isn't recursive, allowing for easier manipulation. The items array now accepts a single type of elements, which can be an array of primitives or an array of objects.",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string", "format": "uri-reference" }
+  },
+  "additionalProperties": {
+    "anyOf": [
+      {
+        "type": ["boolean", "number", "null", "string"]
+      },
+      {
+        "type": "array",
+        "minLength": 1,
+        "items": {
+          "oneOf": [
+            {
+              "type": ["boolean", "number", "null", "string"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": ["boolean", "number", "null", "string"]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

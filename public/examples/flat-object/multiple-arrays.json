@@ -1,0 +1,14 @@
+{
+  "$schema": "https://spec.actionschema.com/flat-object.json",
+  "users": [
+    { "name": "John", "age": 30 },
+    { "name": "Jane", "age": 28 }
+  ],
+  "fine": true,
+  "empty": [],
+  "test": {},
+  "products": [101, 102, 103, { "test": "hey" }],
+  "categories": ["Electronics", "Books", 8],
+  "lastUpdated": "2023-07-31",
+  "version": 1
+}

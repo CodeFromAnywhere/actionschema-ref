@@ -1,0 +1,28 @@
+{
+  "$schema": "https://spec.actionschema.com/actionschema.json",
+  "type": "object",
+  "properties": { "$schema": { "type": "string", "format": "uri" } },
+  "patternProperties": {
+    "^[a-zA-Z]+[a-zA-Z0-9]*$": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "oneOf": [
+            {
+              "description": "An URI referring to a schema.",
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "https://spec.actionschema.com/flat-object.json"
+            }
+          ]
+        },
+
+        "output": {
+          "$ref": "https://spec.actionschema.com/flat-object.json"
+        }
+      }
+    }
+  }
+}

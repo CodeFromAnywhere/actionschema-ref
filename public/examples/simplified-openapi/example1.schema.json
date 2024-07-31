@@ -1,0 +1,4 @@
+{
+  "$schema": "https://spec.actionschema.com/simplified-openapi.json",
+  "test": { "input": {}, "output": {} }
+}

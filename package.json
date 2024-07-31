@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "dependencies": {
+    "browser-xml2js": "^0.4.19",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.2"
+  }
+}
