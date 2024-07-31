@@ -13,3 +13,19 @@ This datastructure aims to create the simplest possible way to describe the func
 With this datastructure and the tooling around it, I am targeting all API-based frameworks and standards that want to do things with semantics of functionality rather than the implementation details such as auth and http.
 
 Examples are my previous version of ActionSchema and the Arazzo specification, but there are probably lots more tools that could benefit for this simplified datastructure.
+
+# ActionSchema
+
+ActionSchema intends to be a new standard allowing developers to create data-centric codebases. ActionSchema is a superset of [JSON-Schema](https://json-schema.org) connecting meaning to how this meaning is obtained through [OpenAPIs](https://www.openapis.org/) and code execution.
+
+![](actionschema.drawio.svg)
+
+## Motivation
+
+- It's hard and complex to build long chains on top of unreliable functions such as LLM's and other transformer AI, if you can't see what is happening in each part of the chain.
+- It's hard to work with OpenAPIs while the potential is giant.
+- Increased locality of behavior: keep your code where you describe your data and keep a SSOT. (See [LoB Principle](https://htmx.org/essays/locality-of-behaviour/))
+
+# Flat Object
+
+This is at the core of the simplification. A flat object is a subset of JSON-Schema that doesn't allow for recursion in the JSON object, effectively allowing for easier manipulation of everything defined with these constraints.
