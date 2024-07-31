@@ -1,7 +1,7 @@
 import * as yaml from "yaml";
 
 export const config = {
-  matcher: "/:path*.yaml",
+  matcher: ["/:path*.json", "/:path*.yaml"],
 };
 
 type SupportedFormat = "json" | "yaml";
@@ -17,6 +17,11 @@ export default async function middleware(
 ): Promise<Response | undefined> {
   const url = new URL(request.url);
   const requestedFormat = url.pathname.split(".").pop() as SupportedFormat;
+  // Check if we're handling the original request or a recursive call
+  if (request.headers.get("X-Original-Format") !== null) {
+    // If it's a recursive call, return the response as-is
+    return;
+  }
 
   if (requestedFormat !== "yaml" && requestedFormat !== "json") {
     return;
@@ -29,7 +34,11 @@ export default async function middleware(
     alternateFormat,
   )}`;
 
-  const response = await fetch(alternateUrl);
+  // Use the modified headers in the fetch request
+  const response = await fetch(alternateUrl, {
+    headers: { "X-Original-Format": requestedFormat },
+  });
+
   if (!response.ok) {
     return;
   }
@@ -37,12 +46,12 @@ export default async function middleware(
   const rawContent = await response.text();
   const content = parseContent(rawContent, alternateFormat);
   const convertedContent = convertFormat(content, requestedFormat);
+  const mediaType =
+    requestedFormat === "json" ? "application/json" : "text/yaml";
 
   return new Response(convertedContent, {
     headers: {
-      "Content-Type": `${
-        requestedFormat === "json" ? "application/json" : "text/yaml"
-      }; charset=utf-8`,
+      "Content-Type": `${mediaType}; charset=utf-8`,
       "Cache-Control": "public, max-age=3600",
     },
   });
