@@ -7,6 +7,7 @@
     <title>ActionSchema Spec Repository</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.2.12/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -40,7 +41,8 @@
 
         <main class="flex-1 p-4 overflow-y-auto">
             <section id="fileContent">
-                <h2 id="fileName" class="text-2xl font-semibold mb-4">Select a file to view its content</h2>
+                <h2 id="fileName" class="text-2xl font-semibold mb-4">README.md</h2>
+                <div id="fileContentHtml"></div>
                 <pre><code id="fileContentCode" class="language-json"></code></pre>
             </section>
         </main>
@@ -52,6 +54,7 @@
 
     <script>
         const files = [
+            { name: 'README.md', path: '/README.md' },
             { name: 'actionschema.json', path: '/actionschema.json' },
             { name: 'flat-object.json', path: '/flat-object.json' },
             { name: 'openapi.json', path: '/openapi.json' },
@@ -60,6 +63,7 @@
 
         const fileList = document.getElementById('fileList');
         const fileName = document.getElementById('fileName');
+        const fileContentHtml = document.getElementById('fileContentHtml');
         const fileContentCode = document.getElementById('fileContentCode');
 
         files.forEach(file => {
@@ -76,15 +80,28 @@
                 const content = await response.text();
 
                 fileName.textContent = file.name;
-                fileContentCode.textContent = content;
 
-                hljs.highlightElement(fileContentCode);
+                if (file.name.endsWith('.md')) {
+                    fileContentHtml.innerHTML = marked.parse(content);
+                    fileContentHtml.style.display = 'block';
+                    fileContentCode.style.display = 'none';
+                } else {
+                    fileContentCode.textContent = content;
+                    fileContentCode.style.display = 'block';
+                    fileContentHtml.style.display = 'none';
+                    hljs.highlightElement(fileContentCode);
+                }
             } catch (error) {
                 console.error('Error fetching file:', error);
                 fileName.textContent = 'Error';
+                fileContentHtml.style.display = 'none';
+                fileContentCode.style.display = 'block';
                 fileContentCode.textContent = 'Error fetching file. Please try again.';
             }
         }
+
+        // Fetch README.md on page load
+        fetchFileContent(files[0]);
     </script>
 </body>
 
