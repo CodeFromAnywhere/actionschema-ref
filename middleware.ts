@@ -1,41 +1,75 @@
 import * as yaml from "yaml";
+import { marked } from "marked";
+import TurndownService from "turndown";
 
 export const config = {
-  matcher: ["/:path*.json", "/:path*.yaml"],
+  matcher: ["/:path*.json", "/:path*.yaml", "/:path*.html"],
 };
 
-type SupportedFormat = "json" | "yaml";
+type SupportedFormat = "json" | "yaml" | "md" | "html";
 
-const convertFormat = (data: any, toFormat: SupportedFormat): string =>
-  toFormat === "json" ? JSON.stringify(data, null, 2) : yaml.stringify(data);
+const mapperObject: Record<SupportedFormat, SupportedFormat> = {
+  json: "yaml",
+  yaml: "json",
+  md: "html",
+  html: "md",
+};
 
-const parseContent = (content: string, format: SupportedFormat): any =>
-  format === "json" ? JSON.parse(content) : yaml.parse(content);
+const convertFormat = async (
+  data: any,
+  fromFormat: SupportedFormat,
+  toFormat: SupportedFormat,
+): Promise<string> => {
+  if (fromFormat === "json" && toFormat === "yaml") {
+    return yaml.stringify(data);
+  } else if (fromFormat === "yaml" && toFormat === "json") {
+    return JSON.stringify(data, null, 2);
+  } else if (fromFormat === "md" && toFormat === "html") {
+    return marked(data);
+  } else {
+    const turndownService = new TurndownService();
+    const markdown = turndownService.turndown(data);
+    return markdown;
+  }
+};
+
+const parseContent = (content: string, format: SupportedFormat): any => {
+  switch (format) {
+    case "json":
+      return JSON.parse(content);
+    case "yaml":
+      return yaml.parse(content);
+    case "md":
+    case "html":
+      return content; // No parsing needed for md or html
+    default:
+      throw new Error(`Unsupported format: ${format}`);
+  }
+};
 
 export default async function middleware(
   request: Request,
 ): Promise<Response | undefined> {
   const url = new URL(request.url);
   const requestedFormat = url.pathname.split(".").pop() as SupportedFormat;
-  // Check if we're handling the original request or a recursive call
+
   if (request.headers.get("X-Original-Format") !== null) {
-    // If it's a recursive call, return the response as-is
     return;
   }
 
-  if (requestedFormat !== "yaml" && requestedFormat !== "json") {
+  if (!(requestedFormat in mapperObject)) {
     return;
   }
 
-  const alternateFormat: SupportedFormat =
-    requestedFormat === "yaml" ? "json" : "yaml";
+  const alternateFormat = mapperObject[requestedFormat];
+
   const alternateUrl = `${url.origin}${url.pathname.replace(
     requestedFormat,
     alternateFormat,
   )}`;
 
-  // Use the modified headers in the fetch request
   const response = await fetch(alternateUrl, {
+    // needed to avoid infinite loop
     headers: { "X-Original-Format": requestedFormat },
   });
 
@@ -45,9 +79,18 @@ export default async function middleware(
 
   const rawContent = await response.text();
   const content = parseContent(rawContent, alternateFormat);
-  const convertedContent = convertFormat(content, requestedFormat);
-  const mediaType =
-    requestedFormat === "json" ? "application/json" : "text/yaml";
+  const convertedContent = await convertFormat(
+    content,
+    alternateFormat,
+    requestedFormat,
+  );
+
+  const mediaType = {
+    json: "application/json",
+    yaml: "text/yaml",
+    html: "text/html",
+    md: "text/markdown",
+  }[requestedFormat];
 
   return new Response(convertedContent, {
     headers: {
