@@ -1,0 +1,39 @@
+$schema: https://spec.actionschema.com/actionschema.json
+type: object
+properties:
+  $schema:
+    type: string
+  items:
+    x-plugin:
+      $operation: https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion
+      context:
+        # ${} is syntax for evaluation of a JSON pointer.
+        # Please note that 'alreadyCountries' doesn't go into the function but is just here for building the operation.
+        alreadyCountries: ${0*}
+        parseOutput: json
+        messages:
+          - role: user
+            # As can be seen here, a direct match with a context parameter is also fine!
+            message: |-
+              Come up with some countries in the world and respond with {[countryName:string]: {} } JSON. 
+              Countries we already have: ${alreadyCountries}.
+    type: object
+    additionalProperties:
+      type: object
+      x-storage: 0#
+      properties:
+        firstName:
+          type: string
+        guessedCountry:
+          type: string
+          x-plugin:
+            $operation: https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion
+            context:
+              parseOutput: json
+              messages:
+                - role: user
+                  # Again we're using ${...} to evaluate a relative JSON pointer in the data structure (from the datapoint, not from the context!)
+                  message:
+                    Please guess the country of ${1/firstName} and respond with JSON
+                    "{country:string}"
+            outputLocation: country
