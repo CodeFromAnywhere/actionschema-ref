@@ -14,13 +14,13 @@
               "format": "uri-reference"
             },
             {
-              "$ref": "https://spec.actionschema.com/flat-object.json"
+              "$ref": "https://spec.actionschema.com/flat-object-schema.json"
             }
           ]
         },
 
         "output": {
-          "$ref": "https://spec.actionschema.com/flat-object.json"
+          "$ref": "https://spec.actionschema.com/flat-object-schema.json"
         }
       }
     }

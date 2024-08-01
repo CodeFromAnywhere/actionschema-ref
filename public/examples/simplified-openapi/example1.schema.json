@@ -1,4 +1,9 @@
 {
   "$schema": "https://spec.actionschema.com/simplified-openapi.json",
-  "test": { "input": {}, "output": {} }
+  "a": { "input": { "type": "object", "$schema": "" }, "output": {} },
+  "b": {
+    "input": {},
+    "output": { "type": "object", "properties": { "x": {} } }
+  },
+  "c": { "input": {}, "output": {} }
 }
