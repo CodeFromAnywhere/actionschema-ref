@@ -51,6 +51,7 @@ export default async function middleware(
   const requestedFormat = url.pathname.split(".").pop() as SupportedFormat;
 
   if (request.headers.get("X-Original-Format") !== null) {
+    // prevent infinite loop
     return;
   }
 
@@ -66,7 +67,6 @@ export default async function middleware(
   )}`;
 
   const response = await fetch(alternateUrl, {
-    // needed to avoid infinite loop
     headers: { "X-Original-Format": requestedFormat },
   });
 

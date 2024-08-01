@@ -25,9 +25,13 @@
 
     "x-storage": {
       "$comment": "NEW! august-24",
-      "description": "Alternate storage method for this value. Must be an uri where the data in this position is stored. ActionSchema will need to have implemented a resolver for this to work.",
+      "description": "Ensures this value will be stored under a key of its dot-location or of x-storage-index, if given.",
       "format": "uri-reference",
-      "type": "string"
+      "type": "string",
+      "enum": ["memory", "object", "cdn"]
+    },
+    "x-storage-index": {
+      "description": "If given, must be a Relative JSON Pointer to the in-data value to be used as the index ID. The implementation of this spec should ensure the key doesn't conflict with other indexes."
     },
 
     "x-plugin": {
