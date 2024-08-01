@@ -4,7 +4,7 @@ For now, it's nothing official yet, and the intention is to first create somethi
 
 These JSON Schemas serve as the source of truth for the specification of them, which is why they contain clear descriptions, which is useful in Typescript and other places.
 
-# Simplified OpenAPI
+# Semantic OpenAPI
 
 OpenAPI, AsyncAPI and others are doing a great job at specifying how API endoints are to be requested, and how to interpret the response. They also define security practices in the APIs. However, these implementation details of how HTTP Requests work aren't important to what a function does semantically.
 
@@ -15,6 +15,8 @@ With this datastructure and the tooling around it, I am targeting all API-based 
 Examples are my previous version of ActionSchema and the Arazzo specification, but there are probably lots more tools that could benefit for this simplified datastructure.
 
 ![](request-normalisation.drawio.svg)
+
+![](openapi-semantic-context.drawio.svg)
 
 # ActionSchema
 
