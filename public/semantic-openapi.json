@@ -1,6 +1,7 @@
 {
   "$schema": "https://spec.actionschema.com/actionschema.json",
   "type": "object",
+  "required": ["$schema", "$openapi"],
   "properties": {
     "$schema": { "type": "string", "format": "uri" },
     "$openapi": {
@@ -37,6 +38,21 @@
               "$ref": "https://spec.actionschema.com/actionschema.json"
             }
           ]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "externalDocs": {
+          "type": "object"
+        },
+        "description": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
         }
       }
     }
