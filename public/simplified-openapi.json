@@ -14,13 +14,22 @@
               "format": "uri-reference"
             },
             {
-              "$ref": "https://spec.actionschema.com/flat-object-schema.json"
+              "$ref": "https://spec.actionschema.com/actionschema.json"
             }
           ]
         },
 
         "output": {
-          "$ref": "https://spec.actionschema.com/flat-object-schema.json"
+          "oneOf": [
+            {
+              "description": "An URI referring to a schema.",
+              "type": "string",
+              "format": "uri-reference"
+            },
+            {
+              "$ref": "https://spec.actionschema.com/actionschema.json"
+            }
+          ]
         }
       }
     }
