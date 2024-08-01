@@ -239,6 +239,14 @@
       "type": "object",
       "description": "ActionSchema plugin",
       "properties": {
+        "$operation": {
+          "type": "string",
+          "description": "Refers to a simplified openapi operation",
+          "examples": [
+            "https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion"
+          ],
+          "format": "uri-reference"
+        },
         "summary": {
           "type": "string",
           "$comment": "Later, could be used to auto-summarise the usage of this plugin"
@@ -270,6 +278,7 @@
         },
 
         "$openapi": {
+          "deprecated": true,
           "$comment": "Its still an interesting idea to maybe reduce this to just the operationId, and getting the rest of the information from the OpenAPI itself. However, it's also nice to have all information required to execute inside of the schema itself. But is this even the case (e.g. with authorization, we still need the openapi.json document to get there)",
           "title": "OpenAPI Details",
           "type": "object",
@@ -322,6 +331,7 @@
         },
 
         "code": {
+          "deprecated": true,
           "type": "object",
           "$comment": "TODO",
           "description": "This could be the code executed upon receiving any context of the schema as context. If we can create an editor that has the proper typescript context and shows the function based on the body, we have a single source of truth for the codebase. We code inside the actionschemas or openapis! The beauty is, this is programming language agnostic and we have a much more readable way to get interfaces.",
