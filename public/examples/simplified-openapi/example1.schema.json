@@ -1,9 +1,22 @@
 {
   "$schema": "https://spec.actionschema.com/simplified-openapi.json",
-  "a": { "input": { "type": "object", "$schema": "" }, "output": {} },
-  "b": {
-    "input": { "type": "object", "properties": { "x": { "type": "" } } },
-    "output": { "type": "object", "properties": { "x": {} } }
+  "getLastName": {
+    "input": {
+      "type": "object",
+      "properties": { "firstName": { "type": "string" } }
+    },
+    "output": {
+      "properties": { "lastName": { "type": "string", "format": "uri" } }
+    }
   },
-  "c": { "input": {}, "output": {} }
+  "getLinkedinUrl": {
+    "input": {
+      "type": "object",
+      "properties": { "name": { "type": "string" } }
+    },
+    "output": {
+      "type": "object",
+      "properties": { "linkedinUrl": { "type": "string", "format": "uri" } }
+    }
+  }
 }
