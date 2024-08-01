@@ -24,14 +24,8 @@
     },
 
     "x-storage": {
-      "$comment": "NEW! august-24",
-      "description": "Ensures this value will be stored under a key of its dot-location or of x-storage-index, if given.",
-      "format": "uri-reference",
-      "type": "string",
-      "enum": ["memory", "object", "cdn"]
-    },
-    "x-storage-index": {
-      "description": "If given, must be a Relative JSON Pointer to the in-data value to be used as the index ID. The implementation of this spec should ensure the key doesn't conflict with other indexes."
+      "type": ["string", "null"],
+      "description": "Ensures this value will be stored under a key of its dot-location (if null) or of the value referenced in the relative json pointer of this string. The implementation of this spec should ensure the key doesn't conflict with other indexes. A JSON that uses this implementation will contain a $ref object instead of the actual data at this location, which can then be retrieved to build up the full JSON."
     },
 
     "x-plugin": {
