@@ -1,9 +1,21 @@
 {
   "$schema": "https://spec.actionschema.com/simplified-openapi.json",
-  "getLastName": {
+  "chatCompletion": {
     "input": {
       "type": "object",
-      "properties": { "firstName": { "type": "string" } }
+      "properties": {
+        "parseOutput": { "type": "string", "enum": ["text", "json"] },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "message": { "type": "string" },
+              "role": { "type": "string", "enum": ["user", "assistant"] }
+            }
+          }
+        }
+      }
     },
     "output": {
       "properties": { "lastName": { "type": "string", "format": "uri" } }

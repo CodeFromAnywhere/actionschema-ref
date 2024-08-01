@@ -1,0 +1,32 @@
+{
+  "$schema": "https://spec.actionschema.com/actionschema.json",
+  "type": "object",
+  "properties": {
+    "$schema": { "type": "string" },
+    "items": {
+      "x-plugin": {},
+
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "x-storage": "0#",
+        "properties": {
+          "firstName": { "type": "string" },
+
+          "guessedCountry": {
+            "type": "string",
+            "x-plugin": {
+              "$operation": "https://spec.actionschema.com/examples/simplified-openapi/example.json#getLastName",
+              "context": {
+                "value": "${item}",
+                "operator": "Starts with",
+                "compare": "https://api.twilio.com"
+              },
+              "outputLocation": "result"
+            }
+          }
+        }
+      }
+    }
+  }
+}
