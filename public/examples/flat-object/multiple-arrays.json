@@ -6,7 +6,7 @@
   ],
   "fine": true,
   "empty": [],
-  "test": {},
+  "test": { "ERROR": "A nested object isn't allowed." },
   "products": [101, 102, 103, { "test": "hey" }],
   "categories": ["Electronics", "Books", 8],
   "lastUpdated": "2023-07-31",
