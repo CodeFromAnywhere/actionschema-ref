@@ -4,25 +4,39 @@
   "properties": {
     "$schema": { "type": "string" },
     "items": {
-      "x-plugin": {},
-
+      "x-plugin": {
+        "$operation": "https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion",
+        "context": {
+          "alreadyCountries": "${keys(0)}",
+          "parseOutput": "json",
+          "messages": [
+            {
+              "role": "user",
+              "message": "Come up with some countries in the world and respond with {[countryName:string]: {} } JSON. Countries we already have: ${alreadyCountries}"
+            }
+          ]
+        }
+      },
       "type": "object",
       "additionalProperties": {
         "type": "object",
         "x-storage": "0#",
         "properties": {
           "firstName": { "type": "string" },
-
           "guessedCountry": {
             "type": "string",
             "x-plugin": {
-              "$operation": "https://spec.actionschema.com/examples/simplified-openapi/example.json#getLastName",
+              "$operation": "https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion",
               "context": {
-                "value": "${item}",
-                "operator": "Starts with",
-                "compare": "https://api.twilio.com"
+                "parseOutput": "json",
+                "messages": [
+                  {
+                    "role": "user",
+                    "message": "Please guess the country of ${firstName} and respond with JSON {country:string}"
+                  }
+                ]
               },
-              "outputLocation": "result"
+              "outputLocation": "country"
             }
           }
         }
