@@ -14,6 +14,8 @@ With this datastructure and the tooling around it, I am targeting all API-based 
 
 Examples are my previous version of ActionSchema and the Arazzo specification, but there are probably lots more tools that could benefit for this simplified datastructure.
 
+![](request-normalisation.drawio.svg)
+
 # ActionSchema
 
 ActionSchema intends to be a new standard allowing developers to create data-centric codebases. ActionSchema is a superset of [JSON-Schema](https://json-schema.org) connecting meaning to how this meaning is obtained through [OpenAPIs](https://www.openapis.org/) and code execution.

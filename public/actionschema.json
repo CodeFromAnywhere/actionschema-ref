@@ -241,9 +241,9 @@
       "properties": {
         "$operation": {
           "type": "string",
-          "description": "Refers to a simplified openapi operation",
+          "description": "Refers to a semantic openapi operation",
           "examples": [
-            "https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion"
+            "https://spec.actionschema.com/examples/semantic-openapi/example.json#chatCompletion"
           ],
           "format": "uri-reference"
         },

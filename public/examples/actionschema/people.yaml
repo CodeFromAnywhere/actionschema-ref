@@ -9,7 +9,8 @@ properties:
       context:
         # ${} is syntax for evaluation of a JSON pointer.
         # Please note that 'alreadyCountries' doesn't go into the function but is just here for building the operation.
-        alreadyCountries: ${0*}
+        # '0*#' denotes all keys on this level!
+        alreadyCountries: ${0*#}
         parseOutput: json
         messages:
           - role: user

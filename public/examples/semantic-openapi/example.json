@@ -1,5 +1,5 @@
 {
-  "$schema": "https://spec.actionschema.com/simplified-openapi.json",
+  "$schema": "https://spec.actionschema.com/semantic-openapi.json",
   "chatCompletion": {
     "input": {
       "type": "object",
