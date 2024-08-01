@@ -1,7 +1,14 @@
 {
   "$schema": "https://spec.actionschema.com/actionschema.json",
   "type": "object",
-  "properties": { "$schema": { "type": "string", "format": "uri" } },
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "$openapi": {
+      "type": "string",
+      "format": "uri",
+      "description": "Referring to the OpenAPI that this is a simplification of."
+    }
+  },
   "patternProperties": {
     "^[a-zA-Z]+[a-zA-Z0-9]*$": {
       "type": "object",
