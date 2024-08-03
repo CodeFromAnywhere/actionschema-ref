@@ -231,25 +231,50 @@
 
             try {
 
-                const response = await fetch(file.path);
-                const content = await response.text();
-                fileName.style.display = 'inline';
-                fileName.textContent = file.name;
-                updateFileLinks(file);
+                fetch(file.path).then(response => response.text()).then(content => {
+                    fileName.style.display = 'inline';
+                    fileName.textContent = file.name;
+                    updateFileLinks(file);
 
-                if (file.path.endsWith(".html")) {
-                    const parser = new DOMParser();
-                    const htmlDoc = parser.parseFromString(content, 'text/html');
-                    fileContentHtml.innerHTML = htmlDoc.body.innerHTML;
-                    fileContentHtml.style.display = 'block';
-                } else {
-                    fileContentCode.textContent = content;
-                    fileContentCode.style.display = 'block';
+                    if (file.path.endsWith(".html")) {
+                        const parser = new DOMParser();
+                        const htmlDoc = parser.parseFromString(content, 'text/html');
+                        fileContentHtml.innerHTML = htmlDoc.body.innerHTML;
+                        fileContentHtml.style.display = 'block';
+                    } else {
+                        fileContentCode.textContent = content;
+                        fileContentCode.style.display = 'block';
+                        hljs.highlightElement(fileContentCode);
+                    }
+                })
 
-                    hljs.highlightElement(fileContentCode);
 
-                    // Fetch and display TypeScript definition
-                    if (file.path.endsWith('.json')) {
+                // Fetch and display TypeScript definition
+                if (file.path.endsWith('.json')) {
+                    new Promise(async (resolve) => {
+
+                        const htmlPath = file.path.replace('.json', '.html');
+                        try {
+                            const htmlResponse = await fetch(htmlPath);
+                            if (!htmlResponse.ok) {
+                                resolve();
+                                return;
+                            }
+                            const htmlContent = await htmlResponse.text();
+                            const parser = new DOMParser();
+                            const htmlDoc = parser.parseFromString(htmlContent, 'text/html');
+                            fileContentHtml.innerHTML = htmlDoc.body.innerHTML;
+                            fileContentHtml.style.display = 'block';
+                            console.log("YAY", htmlContent)
+                            resolve()
+                        } catch (e) {
+                            console.error('Error fetching Markdown definition:', e);
+                        }
+
+                    })
+
+                    new Promise(async (resolve) => {
+
                         const tsPath = file.path.replace('.json', '.ts');
                         try {
                             const tsResponse = await fetch(tsPath);
@@ -258,11 +283,13 @@
                             tsDefinitionCode.style.display = 'block';
                             tsDefinitionCode.textContent = tsContent;
                             hljs.highlightElement(tsDefinitionCode);
+                            resolve()
                         } catch (tsError) {
                             console.error('Error fetching TypeScript definition:', tsError);
                         }
-                    }
+                    })
                 }
+
             } catch (error) {
                 console.error('Error fetching file:', error);
                 fileName.textContent = 'Error';
