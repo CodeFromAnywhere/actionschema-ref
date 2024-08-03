@@ -1,5 +1,13 @@
 import * as yaml from "yaml";
-import { marked } from "marked";
+import { marked, Parser } from "marked";
+
+// marked.use({
+//   renderer: {
+//     image: (url) =>
+//       `<div style="flex: 1; min-width: 300px"><img src="${url}" ></img></div>`,
+//   },
+// });
+
 export const config = {
   matcher: ["/:path*.json", "/:path*.yaml", "/:path*.html", "/:path*.ts"],
 };
