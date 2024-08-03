@@ -212,6 +212,12 @@
                 yamlLink.target = '_blank';
                 yamlLink.textContent = 'YAML';
                 fileLinks.appendChild(yamlLink);
+
+                const tsLink = document.createElement('a');
+                tsLink.href = file.path.replace('.json', '.ts');
+                tsLink.target = '_blank';
+                tsLink.textContent = 'Types';
+                fileLinks.appendChild(tsLink);
             }
         }
 
