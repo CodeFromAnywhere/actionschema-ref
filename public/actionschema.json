@@ -29,9 +29,27 @@
     },
 
     "x-plugin": {
-      "default": {},
+      "x-plugin": {
+        "description": "So sick that the plugin can be calculated using a plugin, potentially! Pick the most sensible suggested plugin automatically, or verify it with the human first.",
+        "context": {
+          "suggestedOperations": "${1/x-suggested-plugins}",
+          "autoPick": "${autoPick}"
+        }
+      },
       "description": "Plug-in an openapi here to say how  this value can be determined.",
       "$ref": "#/definitions/plugin"
+    },
+
+    "x-suggested-plugins": {
+      "description": "An array of suggested operations to alter this key",
+      "x-plugin": {
+        "$operation": "https://search.actionschema.com/semantic-openapi.json#properties/suggestPlugins",
+        "arrayReplace": true,
+        "context": { "schema": "${}", "dataJsonPointer": "${0/@}" },
+        "description": "NOW, THIS IS INTERESTING. WE ARE USING A PLUGIN TO FIND PLUGINS. The function 'suggestPlugins' could be made in a way that it authenticates with your auth, then suggests providers based on your own search preferences and available apis, and it would intelligently use the entire schema and the location of the to-be-suggested plugins within that schema, to have all context it needs.\n\nI can see a potential UI where you have a regular JSON Schema and it would create suggestions for each property."
+      },
+      "type": "array",
+      "items": { "$ref": "#/definitions/plugin" }
     },
 
     "default": {
@@ -291,7 +309,7 @@
             "operationId": { "type": "string" }
           },
           "default": {},
-          "required": ["operationId", "method", "path", "url"]
+          "required": ["operationId", "url"]
         },
 
         "condition": {
