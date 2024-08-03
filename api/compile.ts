@@ -7,12 +7,14 @@ export const GET = async (request: Request) => {
   if (!schemaUrl) {
     return new Response("No schemaUrl passed", { status: 422 });
   }
+  console.log("compiling...", schemaUrl);
   const chunks = schemaUrl.split(".");
   chunks.pop();
   const filename = chunks.join(".");
 
   try {
     const json = await fetch(schemaUrl).then((res) => res.json());
+    console.log("found json...");
 
     const ts = await compile(json, filename, {
       declareExternallyReferenced: false,
