@@ -148,15 +148,21 @@
         </nav>
 
         <main>
-            <section id="fileContent">
-                <h2>
-                    <span id="fileName">README.html</span>
-                    <span id="fileLinks" class="file-links"></span>
-                </h2>
-                <div id="fileContentHtml"></div>
-                <pre><code id="fileContentCode" class="language-json"></code></pre>
-                <h3 id="tsDefinitionTitle" style="display: none; margin-top: 2rem;">TypeScript Definition:</h3>
-                <pre><code id="tsDefinitionCode" class="language-typescript"></code></pre>
+            <section id="fileContent" style="display:flex; flex-direction: row; gap: 10px;">
+
+                <div style="width:50%">
+                    <h2>
+                        <span id="fileName">README.html</span>
+                        <span id="fileLinks" class="file-links"></span>
+                    </h2>
+                    <div id="fileContentHtml"></div>
+                    <pre><code id="fileContentCode" class="language-json"></code></pre>
+                </div>
+                <div style="width:50%">
+                    <h3 id="tsDefinitionTitle" style="display: none; font-size: 1.5rem; font-weight: 600;">TypeScript
+                        Definition:</h3>
+                    <pre><code id="tsDefinitionCode" class="language-typescript"></code></pre>
+                </div>
             </section>
         </main>
     </div>
