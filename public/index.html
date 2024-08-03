@@ -155,6 +155,8 @@
                 </h2>
                 <div id="fileContentHtml"></div>
                 <pre><code id="fileContentCode" class="language-json"></code></pre>
+                <h3 id="tsDefinitionTitle" style="display: none; margin-top: 2rem;">TypeScript Definition:</h3>
+                <pre><code id="tsDefinitionCode" class="language-typescript"></code></pre>
             </section>
         </main>
     </div>
@@ -179,6 +181,8 @@
         const fileLinks = document.getElementById('fileLinks');
         const fileContentHtml = document.getElementById('fileContentHtml');
         const fileContentCode = document.getElementById('fileContentCode');
+        const tsDefinitionTitle = document.getElementById('tsDefinitionTitle');
+        const tsDefinitionCode = document.getElementById('tsDefinitionCode');
 
         files.forEach(file => {
             const fileItem = document.createElement('li');
@@ -212,17 +216,39 @@
                 fileName.textContent = file.name;
                 updateFileLinks(file);
 
-                if (file.name === 'README.html') {
+                if (file.endsWith(".html")) {
                     const parser = new DOMParser();
                     const htmlDoc = parser.parseFromString(content, 'text/html');
                     fileContentHtml.innerHTML = htmlDoc.body.innerHTML;
                     fileContentHtml.style.display = 'block';
                     fileContentCode.style.display = 'none';
+                    tsDefinitionTitle.style.display = 'none';
+                    tsDefinitionCode.style.display = 'none';
                 } else {
                     fileContentCode.textContent = content;
                     fileContentCode.style.display = 'block';
                     fileContentHtml.style.display = 'none';
                     hljs.highlightElement(fileContentCode);
+
+                    // Fetch and display TypeScript definition
+                    if (file.path.endsWith('.json')) {
+                        const tsPath = file.path.replace('.json', '.ts');
+                        try {
+                            const tsResponse = await fetch(tsPath);
+                            const tsContent = await tsResponse.text();
+                            tsDefinitionTitle.style.display = 'block';
+                            tsDefinitionCode.style.display = 'block';
+                            tsDefinitionCode.textContent = tsContent;
+                            hljs.highlightElement(tsDefinitionCode);
+                        } catch (tsError) {
+                            console.error('Error fetching TypeScript definition:', tsError);
+                            tsDefinitionTitle.style.display = 'none';
+                            tsDefinitionCode.style.display = 'none';
+                        }
+                    } else {
+                        tsDefinitionTitle.style.display = 'none';
+                        tsDefinitionCode.style.display = 'none';
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching file:', error);
@@ -231,6 +257,8 @@
                 fileContentHtml.style.display = 'none';
                 fileContentCode.style.display = 'block';
                 fileContentCode.textContent = 'Error fetching file. Please try again.';
+                tsDefinitionTitle.style.display = 'none';
+                tsDefinitionCode.style.display = 'none';
             }
         }
 

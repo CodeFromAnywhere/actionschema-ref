@@ -22,7 +22,6 @@ const convertFormat = async (
 ): Promise<string> => {
   if (fromFormat === "json" && toFormat === "ts") {
     const url = `https://spec.actionschema.com/compile?schemaUrl=https://spec.actionschema.com/${name}.json`;
-    console.log({ url });
     return fetch(url).then((res) => res.text());
   } else if (fromFormat === "json" && toFormat === "yaml") {
     return yaml.stringify(data);
