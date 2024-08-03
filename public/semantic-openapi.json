@@ -1,59 +1,38 @@
 {
   "$schema": "https://spec.actionschema.com/actionschema.json",
+  "description": "This one is rather complex. It's a schema that defines a schema for a semantic openapi, I think.",
   "type": "object",
-  "required": ["$schema", "$openapi"],
+  "required": ["$schema", "type", "additionalProperties", "properties"],
   "properties": {
-    "$schema": { "type": "string", "format": "uri" },
-    "$openapi": {
+    "$schema": {
       "type": "string",
-      "format": "uri",
-      "description": "Referring to the OpenAPI that this is a simplification of."
-    }
-  },
-  "patternProperties": {
-    "^[a-zA-Z]+[a-zA-Z0-9]*$": {
+      "enum": ["https://spec.actionschema.com/semantic-openapi.json"],
+      "default": "https://spec.actionschema.com/semantic-openapi.json"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["object"],
+      "default": "object"
+    },
+    "additionalProperties": {
+      "type": "boolean",
+      "enum": [false],
+      "default": false
+    },
+    "properties": {
+      "description": "The operations. Each operation is defined under a key of the operationId, where the value contains all information of that operation.",
       "type": "object",
-      "properties": {
-        "input": {
-          "oneOf": [
-            {
-              "description": "An URI referring to a schema.",
-              "type": "string",
-              "format": "uri-reference"
-            },
-            {
-              "$ref": "https://spec.actionschema.com/actionschema.json"
-            }
-          ]
-        },
-
-        "output": {
-          "oneOf": [
-            {
-              "description": "An URI referring to a schema.",
-              "type": "string",
-              "format": "uri-reference"
-            },
-            {
-              "$ref": "https://spec.actionschema.com/actionschema.json"
-            }
-          ]
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "externalDocs": {
-          "type": "object"
-        },
-        "description": {
-          "type": "string"
-        },
-        "summary": {
-          "type": "string"
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-zA-Z]+[a-zA-Z0-9]*$": {
+          "$ref": "https://spec.actionschema.com/semantic-operation.json"
         }
+      }
+    },
+    "definitions": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "https://spec.actionschema.com/actionschema.json"
       }
     }
   }

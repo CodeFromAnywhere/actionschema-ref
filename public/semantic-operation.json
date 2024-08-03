@@ -1,0 +1,52 @@
+{
+  "$schema": "https://spec.actionschema.com/actionschema.json",
+
+  "type": "object",
+
+  "description": "A semantic operation is an object containing all info needed to execute an operation in an openapi. This JSON schema can be further constrained into a JSON schema for a specific operation. This would make openapiUrl, operationId, tags, summary, description, externalDocs 'const' and only require output (and input if it's required by the openapi).",
+
+  "properties": {
+    "openapiUrl": { "type": "string" },
+    "operationId": { "type": "string" },
+
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "externalDocs": {
+      "type": "object"
+    },
+    "description": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+
+    "input": {
+      "description": "Input is a simplified object of what goes into the HTTP request to execute the operation.",
+      "oneOf": [
+        {
+          "description": "An URI referring to a schema.",
+          "type": "string",
+          "format": "uri-reference"
+        },
+        { "$ref": "https://spec.actionschema.com/actionschema.json" }
+      ]
+    },
+
+    "output": {
+      "description": "Output is a simplified version of what comes out of the HTTP Response of the operation.",
+      "oneOf": [
+        {
+          "description": "An URI referring to a schema.",
+          "type": "string",
+          "format": "uri-reference"
+        },
+        { "$ref": "https://spec.actionschema.com/actionschema.json" }
+      ]
+    }
+  }
+}
