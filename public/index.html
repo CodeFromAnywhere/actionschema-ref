@@ -167,7 +167,7 @@
 
     <script>
         const files = [
-            { name: 'README', path: '/README.html' },
+            { name: 'README.html', path: '/README.html' },
             { name: 'ActionSchema', path: '/actionschema.json' },
             { name: 'SemanticOpenapiSchema', path: '/semantic-openapi-schema.json' },
             { name: 'SemanticOperationSchema', path: '/semantic-operation-schema.json' },
@@ -193,7 +193,7 @@
 
         function updateFileLinks(file) {
             fileLinks.innerHTML = '';
-            if (file.name.endsWith('.json')) {
+            if (file.path.endsWith('.json')) {
                 const jsonLink = document.createElement('a');
                 jsonLink.href = file.path;
                 jsonLink.target = '_blank';
@@ -216,7 +216,7 @@
                 fileName.textContent = file.name;
                 updateFileLinks(file);
 
-                if (file.endsWith(".html")) {
+                if (file.path.endsWith(".html")) {
                     const parser = new DOMParser();
                     const htmlDoc = parser.parseFromString(content, 'text/html');
                     fileContentHtml.innerHTML = htmlDoc.body.innerHTML;
