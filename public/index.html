@@ -209,10 +209,17 @@
         }
 
         async function fetchFileContent(file) {
+            fileContentCode.style.display = 'none';
+            fileName.style.display = 'none';
+            fileContentHtml.style.display = 'none';
+            tsDefinitionTitle.style.display = 'none';
+            tsDefinitionCode.style.display = 'none';
+
             try {
+
                 const response = await fetch(file.path);
                 const content = await response.text();
-
+                fileName.style.display = 'inline';
                 fileName.textContent = file.name;
                 updateFileLinks(file);
 
@@ -221,13 +228,10 @@
                     const htmlDoc = parser.parseFromString(content, 'text/html');
                     fileContentHtml.innerHTML = htmlDoc.body.innerHTML;
                     fileContentHtml.style.display = 'block';
-                    fileContentCode.style.display = 'none';
-                    tsDefinitionTitle.style.display = 'none';
-                    tsDefinitionCode.style.display = 'none';
                 } else {
                     fileContentCode.textContent = content;
                     fileContentCode.style.display = 'block';
-                    fileContentHtml.style.display = 'none';
+
                     hljs.highlightElement(fileContentCode);
 
                     // Fetch and display TypeScript definition
@@ -242,23 +246,15 @@
                             hljs.highlightElement(tsDefinitionCode);
                         } catch (tsError) {
                             console.error('Error fetching TypeScript definition:', tsError);
-                            tsDefinitionTitle.style.display = 'none';
-                            tsDefinitionCode.style.display = 'none';
                         }
-                    } else {
-                        tsDefinitionTitle.style.display = 'none';
-                        tsDefinitionCode.style.display = 'none';
                     }
                 }
             } catch (error) {
                 console.error('Error fetching file:', error);
                 fileName.textContent = 'Error';
                 fileLinks.innerHTML = '';
-                fileContentHtml.style.display = 'none';
                 fileContentCode.style.display = 'block';
                 fileContentCode.textContent = 'Error fetching file. Please try again.';
-                tsDefinitionTitle.style.display = 'none';
-                tsDefinitionCode.style.display = 'none';
             }
         }
 

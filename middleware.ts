@@ -19,9 +19,10 @@ const convertFormat = async (
   fromFormat: SupportedFormat,
   toFormat: SupportedFormat,
   name: string,
+  origin: string,
 ): Promise<string> => {
   if (fromFormat === "json" && toFormat === "ts") {
-    const url = `https://spec.actionschema.com/compile?schemaUrl=https://spec.actionschema.com/${name}.json`;
+    const url = `${origin}/compile?schemaUrl=${origin}/${name}.json`;
     return fetch(url).then((res) => res.text());
   } else if (fromFormat === "json" && toFormat === "yaml") {
     return yaml.stringify(data);
@@ -87,6 +88,7 @@ export default async function middleware(
     alternateFormat,
     requestedFormat,
     name,
+    url.origin,
   );
 
   const mediaType = {
