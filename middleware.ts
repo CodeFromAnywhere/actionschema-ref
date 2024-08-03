@@ -1,25 +1,30 @@
 import * as yaml from "yaml";
 import { marked } from "marked";
-
 export const config = {
-  matcher: ["/:path*.json", "/:path*.yaml", "/:path*.html"],
+  matcher: ["/:path*.json", "/:path*.yaml", "/:path*.html", "/:path*.ts"],
 };
 
-type SupportedFormat = "json" | "yaml" | "md" | "html";
+type SupportedFormat = "json" | "yaml" | "md" | "html" | "ts";
 
 const mapperObject: Record<SupportedFormat, SupportedFormat> = {
   json: "yaml",
   yaml: "json",
   md: "html",
   html: "md",
+  ts: "json",
 };
 
 const convertFormat = async (
   data: any,
   fromFormat: SupportedFormat,
   toFormat: SupportedFormat,
+  name: string,
 ): Promise<string> => {
-  if (fromFormat === "json" && toFormat === "yaml") {
+  if (fromFormat === "json" && toFormat === "ts") {
+    const url = `https://spec.actionschema.com/compile?schemaUrl=https://spec.actionschema.com/${name}.json`;
+    console.log({ url });
+    return fetch(url).then((res) => res.text());
+  } else if (fromFormat === "json" && toFormat === "yaml") {
     return yaml.stringify(data);
   } else if (fromFormat === "yaml" && toFormat === "json") {
     return JSON.stringify(data, null, 2);
@@ -48,7 +53,9 @@ export default async function middleware(
   request: Request,
 ): Promise<Response | undefined> {
   const url = new URL(request.url);
-  const requestedFormat = url.pathname.split(".").pop() as SupportedFormat;
+  const chunks = url.pathname.split(".");
+  const requestedFormat = chunks.pop() as SupportedFormat;
+  const name = chunks.join(".");
 
   if (request.headers.get("X-Original-Format") !== null) {
     // prevent infinite loop
@@ -62,8 +69,8 @@ export default async function middleware(
   const alternateFormat = mapperObject[requestedFormat];
 
   const alternateUrl = `${url.origin}${url.pathname.replace(
-    requestedFormat,
-    alternateFormat,
+    "." + requestedFormat,
+    "." + alternateFormat,
   )}`;
 
   const response = await fetch(alternateUrl, {
@@ -80,6 +87,7 @@ export default async function middleware(
     content,
     alternateFormat,
     requestedFormat,
+    name,
   );
 
   const mediaType = {
@@ -87,6 +95,7 @@ export default async function middleware(
     yaml: "text/yaml",
     html: "text/html",
     md: "text/markdown",
+    ts: "text/plain",
   }[requestedFormat];
 
   return new Response(convertedContent, {
