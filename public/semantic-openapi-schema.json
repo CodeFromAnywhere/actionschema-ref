@@ -1,6 +1,6 @@
 {
   "$schema": "https://spec.actionschema.com/actionschema.json",
-  "description": "This one is rather complex. It's a schema that defines a schema for a semantic openapi, I think.",
+  "description": "This metaschema defines a JSON Schema that defines a semantic openapi. A semantic openapi abstracts away from authentication and HTTP implementations, and focuses on the semantic meaning of the operations, which have parameters to be described, what's input, and what's output.\n\nA Semantic OpenAPI can be implemented as a proxy, and is able to comprise multiple OpenAPIs too. If implemented, a semantic OpenAPI would get an OpenAPI too that would be much simpler than the original OpenAPI.",
   "type": "object",
   "required": ["$schema", "type", "additionalProperties", "properties"],
   "additionalProperties": false,
