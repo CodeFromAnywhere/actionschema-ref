@@ -3,6 +3,7 @@
   "description": "This one is rather complex. It's a schema that defines a schema for a semantic openapi, I think.",
   "type": "object",
   "required": ["$schema", "type", "additionalProperties", "properties"],
+  "additionalProperties": false,
   "properties": {
     "$schema": {
       "type": "string",

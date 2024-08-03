@@ -1,0 +1,67 @@
+{
+  "$schema": "https://spec.actionschema.com/actionschema.json",
+
+  "type": "object",
+  "additionalProperties": false,
+
+  "description": "Schema that defines a semantic operation schema.",
+
+  "required": ["type", "additionalProperties"],
+
+  "properties": {
+    "type": { "type": "string", "enum": ["object"], "default": "object" },
+    "description": {
+      "type": "string",
+      "description": "Combined description of all semantics"
+    },
+    "additionalProperties": {
+      "type": "boolean",
+      "default": false,
+      "enum": [false]
+    },
+    "required": { "type": "array", "items": { "type": "string" } },
+    "properties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "openapiUrl", "summary", "output"],
+      "properties": {
+        "operationId": { "type": "string" },
+        "openapiUrl": { "type": "string" },
+
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "externalDocs": {
+          "type": "object",
+          "required": ["url"],
+          "properties": {
+            "description": { "type": "string" },
+            "url": { "type": "string", "format": "uri-reference" }
+          }
+        },
+
+        "description": {
+          "type": "string"
+        },
+
+        "summary": {
+          "type": "string"
+        },
+
+        "input": {
+          "description": "Input is a simplified object of what goes into the HTTP request to execute the operation.",
+          "$ref": "https://spec.actionschema.com/actionschema.json"
+        },
+
+        "output": {
+          "description": "Output is a simplified version of what comes out of the HTTP Response of the operation.",
+          "$ref": "https://spec.actionschema.com/actionschema.json"
+        }
+      }
+    }
+  }
+}
