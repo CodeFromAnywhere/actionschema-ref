@@ -1,5 +1,7 @@
 {
-  "$schema": "https://spec.actionschema.com/semantic-openapi.json",
+  "$schema": "https://spec.actionschema.com/semantic-openapi-schema.json",
+
+  //todo; improve
   "chatCompletion": {
     "input": {
       "type": "object",

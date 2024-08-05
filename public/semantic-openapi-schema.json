@@ -7,8 +7,8 @@
   "properties": {
     "$schema": {
       "type": "string",
-      "enum": ["https://spec.actionschema.com/semantic-openapi.json"],
-      "default": "https://spec.actionschema.com/semantic-openapi.json"
+      "enum": ["https://spec.actionschema.com/semantic-openapi-schema.json"],
+      "default": "https://spec.actionschema.com/semantic-openapi-schema.json"
     },
     "type": {
       "type": "string",
