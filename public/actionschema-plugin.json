@@ -4,9 +4,9 @@
   "properties": {
     "$operation": {
       "type": "string",
-      "description": "JSON Schema $ref that resolves to a semantic operation as defined in https://spec.actionschema.com/semantic-operation.json",
+      "description": "OpenAPI URL + pointer to the operation",
       "examples": [
-        "https://spec.actionschema.com/examples/semantic-openapi/example.json#chatCompletion"
+        "https://search.actionschema.com/openapi.json#/operations/jsonChatCompletion"
       ],
       "format": "uri-reference"
     },
