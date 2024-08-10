@@ -1,0 +1,215 @@
+{
+  "$comment": "This schema defines its own adaptation of JSON Schema. A quick look shows me that it has properties JSON-Schema doesn't have: discriminator, example, externalDocs, deprecated, xml. Good idea probably to also add discriminator and externalDocs to JSONSchema.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "multipleOf": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "maximum": {
+      "type": "number"
+    },
+    "exclusiveMaximum": {
+      "type": "boolean",
+      "default": false
+    },
+    "minimum": {
+      "type": "number"
+    },
+    "exclusiveMinimum": {
+      "type": ["number", "boolean"],
+      "default": false
+    },
+    "maxLength": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "minLength": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "pattern": {
+      "type": "string",
+      "format": "regex"
+    },
+    "maxItems": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "minItems": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "uniqueItems": {
+      "type": "boolean",
+      "default": false
+    },
+    "maxProperties": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "minProperties": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "required": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "enum": {
+      "type": "array",
+      "items": {},
+      "minItems": 1,
+      "uniqueItems": false
+    },
+    "type": {
+      "type": "string",
+      "enum": ["array", "boolean", "integer", "number", "object", "string"]
+    },
+    "not": {
+      "oneOf": [
+        {
+          "$ref": "#"
+        },
+        {
+          "$ref": "#/definitions/Reference"
+        }
+      ]
+    },
+    "allOf": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#"
+          },
+          {
+            "$ref": "#/definitions/Reference"
+          }
+        ]
+      }
+    },
+    "oneOf": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#"
+          },
+          {
+            "$ref": "#/definitions/Reference"
+          }
+        ]
+      }
+    },
+    "anyOf": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#"
+          },
+          {
+            "$ref": "#/definitions/Reference"
+          }
+        ]
+      }
+    },
+    "items": {
+      "oneOf": [
+        {
+          "$ref": "#"
+        },
+        {
+          "$ref": "#/definitions/Reference"
+        }
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#"
+          },
+          {
+            "$ref": "#/definitions/Reference"
+          }
+        ]
+      }
+    },
+    "additionalProperties": {
+      "oneOf": [
+        {
+          "$ref": "#"
+        },
+        {
+          "$ref": "#/definitions/Reference"
+        },
+        {
+          "type": "boolean"
+        }
+      ],
+      "default": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "format": {
+      "type": "string"
+    },
+    "default": {},
+    "nullable": {
+      "type": "boolean",
+      "default": false
+    },
+    "discriminator": {
+      "$ref": "#/definitions/Discriminator"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "writeOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "example": {},
+    "externalDocs": {
+      "$ref": "#/definitions/ExternalDocumentation"
+    },
+    "deprecated": {
+      "type": "boolean",
+      "default": false
+    },
+    "xml": {
+      "$ref": "#/definitions/XML"
+    }
+  },
+  "patternProperties": {
+    "^x-": {}
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Reference": {
+      "type": "object",
+      "required": ["$ref"],
+      "patternProperties": {
+        "^\\$ref$": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      }
+    }
+  }
+}

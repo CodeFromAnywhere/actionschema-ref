@@ -1,0 +1,296 @@
+{
+  "type": "object",
+  "patternProperties": {
+    "^[a-zA-Z0-9\\.\\-_]+$": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Reference"
+        },
+        {
+          "$ref": "#/definitions/SecurityScheme"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Reference": {
+      "type": "object",
+      "required": ["$ref"],
+      "patternProperties": {
+        "^\\$ref$": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      }
+    },
+    "SecurityScheme": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/APIKeySecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/HTTPSecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/OAuth2SecurityScheme"
+        },
+        {
+          "$ref": "#/definitions/OpenIdConnectSecurityScheme"
+        }
+      ]
+    },
+    "APIKeySecurityScheme": {
+      "type": "object",
+      "required": ["type", "name", "in"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["apiKey"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "in": {
+          "type": "string",
+          "enum": ["header", "query", "cookie"]
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+    "HTTPSecurityScheme": {
+      "type": "object",
+      "required": ["scheme", "type"],
+      "properties": {
+        "scheme": { "type": "string" },
+        "bearerFormat": { "type": "string" },
+        "description": { "type": "string" },
+        "type": { "type": "string", "enum": ["http"] }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "description": "Bearer",
+          "properties": {
+            "scheme": {
+              "type": "string",
+              "pattern": "^[Bb][Ee][Aa][Rr][Ee][Rr]$"
+            }
+          }
+        },
+        {
+          "description": "Non Bearer",
+          "not": {
+            "required": ["bearerFormat"]
+          },
+          "properties": {
+            "scheme": {
+              "not": {
+                "type": "string",
+                "pattern": "^[Bb][Ee][Aa][Rr][Ee][Rr]$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OAuth2SecurityScheme": {
+      "type": "object",
+      "required": ["type", "flows"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["oauth2"]
+        },
+        "flows": {
+          "$ref": "#/definitions/OAuthFlows"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+    "OpenIdConnectSecurityScheme": {
+      "type": "object",
+      "required": ["type", "openIdConnectUrl"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["openIdConnect"]
+        },
+        "openIdConnectUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+
+    "OAuthFlows": {
+      "type": "object",
+      "properties": {
+        "implicit": {
+          "$ref": "#/definitions/ImplicitOAuthFlow"
+        },
+        "password": {
+          "$ref": "#/definitions/PasswordOAuthFlow"
+        },
+        "clientCredentials": {
+          "$ref": "#/definitions/ClientCredentialsFlow"
+        },
+        "authorizationCode": {
+          "$ref": "#/definitions/AuthorizationCodeOAuthFlow"
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+    "ImplicitOAuthFlow": {
+      "type": "object",
+      "required": ["authorizationUrl", "scopes"],
+      "properties": {
+        "authorizationUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "refreshUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "scopes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+    "PasswordOAuthFlow": {
+      "type": "object",
+      "required": ["tokenUrl", "scopes"],
+      "properties": {
+        "tokenUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "refreshUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "scopes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+    "ClientCredentialsFlow": {
+      "type": "object",
+      "required": ["tokenUrl", "scopes"],
+      "properties": {
+        "tokenUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "refreshUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "scopes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+    "AuthorizationCodeOAuthFlow": {
+      "type": "object",
+      "description": "See https://developer.okta.com/blog/2018/04/10/oauth-authorization-code-grant-type for a good understanding",
+      "required": ["authorizationUrl", "tokenUrl", "scopes"],
+      "properties": {
+        "authorizationUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "tokenUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "refreshUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+
+        "x-scopes-parameters": { "$ref": "#/definitions/ScopeParameters" },
+        "scopes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+
+    "ScopeParameters": {
+      "type": "array",
+      "description": "OAS extension that specifies the parameters you use in your scopes.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "schema": {
+            "oneOf": [
+              {
+                "$ref": "https://spec.actionschema.com/openapi-schema.json"
+              },
+              {
+                "$ref": "#/definitions/Reference"
+              }
+            ],
+            "description": "Defaults to string, but can be further defined here if it has a specific syntax (using format or regex, for example)"
+          },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}
