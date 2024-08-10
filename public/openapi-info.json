@@ -1,0 +1,218 @@
+{
+  "$comment": "Edited to add ActionSchema standard",
+  "type": "object",
+  "required": ["title", "version"],
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+
+    "version": {
+      "description": "The version of the OpenAPI document (which is distinct from the OpenAPI Specification version or the API implementation version).",
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+
+    "termsOfService": {
+      "type": "string",
+      "format": "uri-reference"
+    },
+
+    "contact": {
+      "description": "Contact information for the exposed API.",
+      "$ref": "#/definitions/Contact"
+    },
+
+    "license": {
+      "description": "The license information for the exposed API.",
+      "$ref": "#/definitions/License"
+    },
+
+    "x-people": {
+      "description": "Different people in the company and their capabilities and communication channels",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Contact"
+      }
+    },
+
+    "x-product": {
+      "$comment": "TODO",
+      "description": "Product info."
+    },
+
+    "x-links": {
+      "description": "Important links needed for agents to make using the API easier.",
+      "type": "object",
+      "properties": {
+        "signupUrl": { "type": "string" },
+        "loginUrl": { "type": "string" },
+        "forgotPasswordUrl": { "type": "string" },
+        "pricingUrl": { "type": "string" },
+        "billingUrl": {
+          "type": "string",
+          "description": "Page from where logged-in user can make purchases, cancel subscription, etc."
+        },
+        "usageUrl": {
+          "type": "string",
+          "description": "URL of a page where the user can see their usage and its cost."
+        },
+        "docsUrl": { "type": "string" },
+        "supportUrl": { "type": "string" },
+        "apiAuthorizationSettingsUrl": {
+          "type": "string",
+          "description": "Url of the page where the user can find the required information for authorizing on the API. Usually this is a page where the user can create and see their API tokens."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "x-pricing": {
+      "description": "Pricing info including monthly fees.",
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "General summary of all plans"
+        },
+        "plans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "price": { "type": "number" },
+              "currency": { "type": "string" },
+              "title": { "type": "string" },
+              "credit": {
+                "type": "number",
+                "description": "How much credit do you get for this. Credit matches the credit spent with 'priceCredit' extension for operations"
+              },
+              "persistence": {
+                "type": "string",
+                "enum": ["forever", "interval", "capped"],
+                "description": "How long will you retain the credit you receive?"
+              },
+              "persistenceCappedDays": {
+                "type": "number",
+                "description": "Required when filling in persistence 'capped'"
+              },
+              "interval": {
+                "description": "If the plan is a subscription based plan, fill in the interval on which every time the price is paid, and credit is given. \n\nIf there is a pay-as-you-go price, fill in the minimum purchase size for each step. It will be assumed the price to credit ratio is linear.",
+                "type": "string",
+                "enum": ["week", "month", "quarter", "year"]
+              },
+              "rateLimit": {
+                "description": "Plan-based RateLimit info that overwrites the general rateLimit.",
+                "$ref": "#/definitions/RateLimit"
+              }
+            },
+            "required": ["price", "currency", "title", "credit"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "x-rateLimit": {
+      "description": "Global ratelimit info. Can be overwritten either by plans or by operations.",
+      "$ref": "#/definitions/RateLimit"
+    },
+
+    "x-reviews": {
+      "$comment": "TODO",
+      "description": "General product reviews, collected."
+    },
+
+    "x-latency": {
+      "$comment": "TODO",
+      "description": "General latency info."
+    },
+
+    "x-alternatives": {
+      "$comment": "TODO",
+      "description": "Link to other openapis that could be good alternatives.",
+      "type": "array",
+      "items": { "type": "string", "format": "uri-reference" }
+    },
+
+    "x-logo": {
+      "description": "Logo metadata. Standard taken from https://apis.guru",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to a logo image"
+        },
+        "backgroundColor": { "type": "string" },
+        "secondaryColor": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "patternProperties": {
+    "^x-": {}
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "License": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    },
+    "RateLimit": {
+      "$comment": "WIP",
+      "description": "Ratelimiting extension by ActionSchema. Can be applied globally, per plan, per tag, or per operation",
+      "type": "object",
+      "properties": {
+        "limit": { "type": "number" },
+        "interval": { "type": "string", "enum": ["second", "minute"] }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+
+        "x-phoneNumber": {
+          "type": "string",
+          "format": "phone",
+          "$comment": "Added for ActionSchema"
+        },
+
+        "x-description": {
+          "type": "string"
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}
