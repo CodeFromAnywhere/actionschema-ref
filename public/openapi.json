@@ -287,51 +287,6 @@
       "additionalProperties": false
     },
 
-    "Discriminator": {
-      "description": "Used to select a oneOf-value based on a property in the value. See https://swagger.io/specification/v3/#discriminator-object",
-      "type": "object",
-      "required": ["propertyName"],
-      "properties": {
-        "propertyName": {
-          "type": "string"
-        },
-        "mapping": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "XML": {
-      "type": "object",
-      "$comment": "Not implemented",
-      "description": "A metadata object that allows for more fine-tuned XML model definitions",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "namespace": {
-          "type": "string",
-          "format": "uri"
-        },
-        "prefix": {
-          "type": "string"
-        },
-        "attribute": {
-          "type": "boolean",
-          "default": false
-        },
-        "wrapped": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "patternProperties": {
-        "^x-": {}
-      },
-      "additionalProperties": false
-    },
     "Response": {
       "type": "object",
       "required": ["description"],
@@ -821,31 +776,7 @@
       },
       "additionalProperties": false
     },
-    "ExternalDocumentation": {
-      "type": "object",
-      "required": ["url"],
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri-reference"
-        },
-        "markdown": {
-          "$comment": "Added for ActionSchema. To be implemented.",
-          "description": "Scraped markdown from the url",
-          "x-plugin": {
-            "dataDependencies": ["url"],
-            "description": "Should use a scraper to get the readable content text in markdown format"
-          }
-        }
-      },
-      "patternProperties": {
-        "^x-": {}
-      },
-      "additionalProperties": false
-    },
+
     "ExampleXORExamples": {
       "description": "Example and examples are mutually exclusive",
       "not": {
