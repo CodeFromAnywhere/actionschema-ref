@@ -47,6 +47,19 @@
       "description": "Important links needed for agents to make using the API easier.",
       "type": "object",
       "properties": {
+        "token_url": {
+          "type": "string",
+          "description": "URL for a post request for code exchange for access token (Oauth2)"
+        },
+        "refresh_url": { "type": "string" },
+        "revoke_url": {
+          "type": "string",
+          "description": "Endpoint to revoke the OAuth2 token"
+        },
+        "authorization_url": {
+          "type": "string",
+          "description": "URL Leading to a page to authorize/login. May contain {slug} that needs to be replaced with the clients slug. Please note this can also be a regular login page url in case the provider doesn't use oauth2."
+        },
         "signupUrl": { "type": "string" },
         "loginUrl": { "type": "string" },
         "forgotPasswordUrl": { "type": "string" },
@@ -61,10 +74,25 @@
         },
         "docsUrl": { "type": "string" },
         "supportUrl": { "type": "string" },
-        "apiAuthorizationSettingsUrl": {
+
+        "integrationsDocsUrl": {
+          "type": "string",
+          "description": "Url to info about creating integration or authorization with the provider"
+        },
+
+        "sourceUrl": {
+          "type": "string",
+          "description": "Github repo or similar"
+        },
+
+        "apiManagementUrl": {
           "type": "string",
           "description": "Url of the page where the user can find the required information for authorizing on the API. Usually this is a page where the user can create and see their API tokens."
-        }
+        },
+
+        "createOauthAppUrl": { "type": "string" },
+
+        "scopesUrl": { "type": "string", "description": "Docs about scopes" }
       },
       "additionalProperties": false
     },
