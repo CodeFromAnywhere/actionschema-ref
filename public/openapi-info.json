@@ -133,7 +133,7 @@
               },
               "rateLimit": {
                 "description": "Plan-based RateLimit info that overwrites the general rateLimit.",
-                "$ref": "#/definitions/RateLimit"
+                "$ref": "https://spec.actionschema.com/ratelimit.json"
               }
             },
             "required": ["price", "currency", "title", "credit"],
@@ -203,15 +203,7 @@
       },
       "additionalProperties": false
     },
-    "RateLimit": {
-      "$comment": "WIP",
-      "description": "Ratelimiting extension by ActionSchema. Can be applied globally, per plan, per tag, or per operation",
-      "type": "object",
-      "properties": {
-        "limit": { "type": "number" },
-        "interval": { "type": "string", "enum": ["second", "minute"] }
-      }
-    },
+
     "Contact": {
       "type": "object",
       "properties": {

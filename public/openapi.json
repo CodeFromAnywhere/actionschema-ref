@@ -622,7 +622,7 @@
 
         "x-rateLimit": {
           "description": "Operation-based ratelimit info. This overwrites plan-based or global ratelimits.",
-          "$ref": "#/definitions/RateLimit"
+          "$ref": "https://spec.actionschema.com/ratelimit.json"
         },
 
         "x-priceCredit": {
@@ -768,7 +768,7 @@
         },
         "x-rateLimit": {
           "description": "Tag-based ratelimit info.",
-          "$ref": "#/definitions/RateLimit"
+          "$ref": "https://spec.actionschema.com/ratelimit.json"
         }
       },
       "patternProperties": {
