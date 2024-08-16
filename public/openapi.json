@@ -48,7 +48,7 @@
     "externalDocs": {
       "$comment": "Should be documenting just the main capabilities. If not present, can infer this from 'info'",
       "description": "Additional external documentation.",
-      "$ref": "#/definitions/ExternalDocumentation"
+      "$ref": "https://spec.actionschema.com/openapi-schema.json#/definitions/ExternalDocumentation"
     },
 
     "servers": {
