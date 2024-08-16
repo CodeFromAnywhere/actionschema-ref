@@ -146,7 +146,7 @@
 
     "x-rateLimit": {
       "description": "Global ratelimit info. Can be overwritten either by plans or by operations.",
-      "$ref": "#/definitions/RateLimit"
+      "$ref": "https://spec.actionschema.com/ratelimit.json"
     },
 
     "x-reviews": {
