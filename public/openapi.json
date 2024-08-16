@@ -645,7 +645,7 @@
           "type": "string"
         },
         "externalDocs": {
-          "$ref": "#/definitions/ExternalDocumentation"
+          "$ref": "https://spec.actionschema.com/openapi-schema.json#/definitions/ExternalDocumentation"
         },
 
         "operationId": {
@@ -764,7 +764,7 @@
           "type": "string"
         },
         "externalDocs": {
-          "$ref": "#/definitions/ExternalDocumentation"
+          "$ref": "https://spec.actionschema.com/openapi-schema.json#/definitions/ExternalDocumentation"
         },
         "x-rateLimit": {
           "description": "Tag-based ratelimit info.",
