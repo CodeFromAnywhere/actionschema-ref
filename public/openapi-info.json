@@ -133,7 +133,7 @@
               },
               "rateLimit": {
                 "description": "Plan-based RateLimit info that overwrites the general rateLimit.",
-                "$ref": "https://spec.actionschema.com/ratelimit.json"
+                "$ref": "https://ref.actionschema.com/ratelimit.json"
               }
             },
             "required": ["price", "currency", "title", "credit"],
@@ -146,7 +146,7 @@
 
     "x-rateLimit": {
       "description": "Global ratelimit info. Can be overwritten either by plans or by operations.",
-      "$ref": "https://spec.actionschema.com/ratelimit.json"
+      "$ref": "https://ref.actionschema.com/ratelimit.json"
     },
 
     "x-reviews": {

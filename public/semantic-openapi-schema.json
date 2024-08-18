@@ -1,5 +1,5 @@
 {
-  "$schema": "https://spec.actionschema.com/actionschema.json",
+  "$schema": "https://ref.actionschema.com/actionschema.json",
   "description": "This metaschema defines a JSON Schema that defines a semantic openapi. A semantic openapi abstracts away from authentication and HTTP implementations, and focuses on the semantic meaning of the operations, which have parameters to be described, what's input, and what's output.\n\nA Semantic OpenAPI can be implemented as a proxy, and is able to comprise multiple OpenAPIs too. If implemented, a semantic OpenAPI would get an OpenAPI too that would be much simpler than the original OpenAPI.",
   "type": "object",
   "required": ["$schema", "type", "additionalProperties", "properties"],
@@ -7,8 +7,8 @@
   "properties": {
     "$schema": {
       "type": "string",
-      "enum": ["https://spec.actionschema.com/semantic-openapi-schema.json"],
-      "default": "https://spec.actionschema.com/semantic-openapi-schema.json"
+      "enum": ["https://ref.actionschema.com/semantic-openapi-schema.json"],
+      "default": "https://ref.actionschema.com/semantic-openapi-schema.json"
     },
     "type": {
       "type": "string",
@@ -26,14 +26,14 @@
       "additionalProperties": false,
       "patternProperties": {
         "^[a-zA-Z]+[a-zA-Z0-9]*$": {
-          "$ref": "https://spec.actionschema.com/semantic-operation-schema.json"
+          "$ref": "https://ref.actionschema.com/semantic-operation-schema.json"
         }
       }
     },
     "definitions": {
       "type": "object",
       "additionalProperties": {
-        "$ref": "https://spec.actionschema.com/actionschema.json"
+        "$ref": "https://ref.actionschema.com/actionschema.json"
       }
     }
   }

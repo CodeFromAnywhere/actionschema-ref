@@ -280,7 +280,7 @@
           "schema": {
             "oneOf": [
               {
-                "$ref": "https://spec.actionschema.com/openapi-schema.json"
+                "$ref": "https://ref.actionschema.com/openapi-schema.json"
               },
               {
                 "$ref": "#/definitions/Reference"

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://spec.actionschema.com/actionschema.json",
+  "$schema": "https://ref.actionschema.com/actionschema.json",
   "$id": "schema-list.schema.json",
   "title": "Schema List",
   "description": "Defines metadata about every actionschema collection",

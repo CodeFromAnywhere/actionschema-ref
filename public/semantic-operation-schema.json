@@ -1,5 +1,5 @@
 {
-  "$schema": "https://spec.actionschema.com/actionschema.json",
+  "$schema": "https://ref.actionschema.com/actionschema.json",
   "description": "Meta Schema that defines a schema that defines a semantic operation.",
   "type": "object",
   "additionalProperties": false,
@@ -24,34 +24,34 @@
       "required": ["operationId", "openapiUrl", "summary", "output"],
       "properties": {
         "operationId": {
-          "$ref": "https://spec.actionschema.com/actionschema.json"
+          "$ref": "https://ref.actionschema.com/actionschema.json"
         },
         "openapiUrl": {
-          "$ref": "https://spec.actionschema.com/actionschema.json"
+          "$ref": "https://ref.actionschema.com/actionschema.json"
         },
 
-        "tags": { "$ref": "https://spec.actionschema.com/actionschema.json" },
+        "tags": { "$ref": "https://ref.actionschema.com/actionschema.json" },
 
         "externalDocs": {
-          "$ref": "https://spec.actionschema.com/actionschema.json"
+          "$ref": "https://ref.actionschema.com/actionschema.json"
         },
 
         "description": {
-          "$ref": "https://spec.actionschema.com/actionschema.json"
+          "$ref": "https://ref.actionschema.com/actionschema.json"
         },
 
         "summary": {
-          "$ref": "https://spec.actionschema.com/actionschema.json"
+          "$ref": "https://ref.actionschema.com/actionschema.json"
         },
 
         "input": {
           "description": "Input is a simplified object of what goes into the HTTP request to execute the operation.",
-          "$ref": "https://spec.actionschema.com/actionschema.json"
+          "$ref": "https://ref.actionschema.com/actionschema.json"
         },
 
         "output": {
           "description": "Output is a simplified version of what comes out of the HTTP Response of the operation.",
-          "$ref": "https://spec.actionschema.com/actionschema.json"
+          "$ref": "https://ref.actionschema.com/actionschema.json"
         }
       }
     }

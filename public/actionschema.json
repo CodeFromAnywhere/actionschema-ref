@@ -1,5 +1,5 @@
 {
-  "$schema": "https://spec.actionschema.com/actionschema.json",
+  "$schema": "https://ref.actionschema.com/actionschema.json",
 
   "title": "ActionSchema",
   "description": "Core json-schema meta-schema, adapted to make it an ActionSchema with plugin capabilities. Root taken from https://json-schema.org/draft-07/schema#definitions",
@@ -37,7 +37,7 @@
         }
       },
       "description": "Plug-in an openapi here to say how  this value can be determined.",
-      "$ref": "https://spec.actionschema.com/actionschema-plugin.json"
+      "$ref": "https://ref.actionschema.com/actionschema-plugin.json"
     },
 
     "x-suggested-plugins": {
@@ -50,7 +50,7 @@
       },
       "type": "array",
       "items": {
-        "$ref": "https://spec.actionschema.com/actionschema-plugin.json"
+        "$ref": "https://ref.actionschema.com/actionschema-plugin.json"
       }
     },
 

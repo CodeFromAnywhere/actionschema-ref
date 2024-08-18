@@ -1,11 +1,11 @@
-$schema: https://spec.actionschema.com/actionschema.json
+$schema: https://ref.actionschema.com/actionschema.json
 type: object
 properties:
   $schema:
     type: string
   items:
     x-plugin:
-      $operation: https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion
+      $operation: https://ref.actionschema.com/examples/simplified-openapi/example.json#chatCompletion
       context:
         # ${} is syntax for evaluation of a JSON pointer.
         # Please note that 'alreadyCountries' doesn't go into the function but is just here for building the operation.
@@ -28,7 +28,7 @@ properties:
         guessedCountry:
           type: string
           x-plugin:
-            $operation: https://spec.actionschema.com/examples/simplified-openapi/example.json#chatCompletion
+            $operation: https://ref.actionschema.com/examples/simplified-openapi/example.json#chatCompletion
             context:
               parseOutput: json
               messages:
