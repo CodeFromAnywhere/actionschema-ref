@@ -570,6 +570,26 @@
       "type": "object",
       "required": ["responses"],
       "properties": {
+        "x-chat": {
+          "description": "Chat Completion primitives that are enabled for this operation",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "redirect": {
+              "type": "boolean",
+              "description": "If true, the response containing location indicates the user should navigate there. This may or may not be enough to also edit tools of self."
+            },
+            "codeblock": {
+              "type": "boolean",
+              "description": "If true, the 'code' and 'language' (if available) parameters of the input will be filled with content of the last codeblock. Ensure to make this clear and make these parameters optional."
+            },
+            "prompt": {
+              "type": "boolean",
+              "description": "If true, the prompt of the user will be provided into 'prompt' unless overwritten."
+            }
+          }
+        },
+
         "x-capabilities": {
           "description": "ActionSchema addition: This can be filled with an array of different things of what you can do with the endpoint with more information of what the input should be and what the output should be.",
           "$comment": "This could be later expanded from an array of strings to a more specific array of input/output combos or coded tests, that will tell you, in a way, whether the endpoint works as expected.",
