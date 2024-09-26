@@ -3,6 +3,7 @@
 So far I'm thinking about these open protocols, which are to be outlined in this folder:
 
 - Chat Completion Protocol (as https://console.groq.com/docs/openai)
+- Open Micro Search Protocol
 - ActionSchema Storage Protocol
 - CRUD Protocol
 - Chat Communication Protocol
