@@ -20,8 +20,16 @@
       "properties": { "tokens": { "type": "number" } }
     },
     "tree": { "$ref": "#/definitions/Tree" },
+
+    "summary": {
+      "type": "object",
+      "description": "Mapped object where the keys are file- OR FOLDER-paths starting with '/'. Values are summaries of the file or folder. Not all paths need to be defined.",
+      "additionalProperties": { "type": "string" }
+    },
+
     "files": {
       "type": "object",
+      "description": "The file object. Keys are filepaths starting with '/'.",
       "additionalProperties": {
         "type": "object",
         "required": ["type", "size", "hash"],
@@ -30,26 +38,38 @@
             "type": "string",
             "enum": ["content", "binary"]
           },
-          "size": { "type": "number" },
-          "hash": { "type": "string" },
-          "content": { "type": "string" },
-          "url": { "type": "string" },
+          "size": { "type": "number", "description": "Size in bytes." },
+          "hash": {
+            "type": "string",
+            "description": "Hash of the content that makes it easy to check for equality."
+          },
+          "content": {
+            "type": "string",
+            "description": "Can be either utf-8 content, or binary encoded as base-64 string."
+          },
+          "url": {
+            "type": "string",
+            "description": "GET URL resolving to the content"
+          },
           "json": {
             "type": "object",
-            "description": "If content is JSON, you can find a parsed JSON here"
+            "description": "If content is in JSON, YAML, CSV, XML or other structured data format, the parsed data may be put here as JSON object"
           }
         }
       }
     },
-    "diff": {
-      "type": "string",
-      "description": "The diff from the original fileObject to the current fileObject"
-    },
+
     "operations": {
+      "description": "An array of file operations that have been applied to get to these files",
       "type": "array",
       "items": {
         "$ref": "https://ref.actionschema.com/file-operation.json"
       }
+    },
+
+    "diff": {
+      "type": "string",
+      "description": "The git diff from the original fileObject to the current fileObject. Same as operations but defined in another datastructure."
     }
   }
 }
