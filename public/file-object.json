@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["size", "tree", "files", "diff", "operations"],
+  "properties": {
+    "size": {
+      "type": "object",
+      "properties": { "tokens": { "type": "number" } }
+    },
+    "tree": { "type": "object", "additionalProperties": true },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type", "size", "hash"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["content", "binary"]
+          },
+          "size": { "type": "number" },
+          "hash": { "type": "string" },
+          "content": { "type": "string" },
+          "url": { "type": "string" },
+          "json": {
+            "type": "object",
+            "description": "If content is JSON, you can find a parsed JSON here"
+          }
+        }
+      }
+    },
+    "diff": {
+      "type": "string",
+      "description": "The diff from the original fileObject to the current fileObject"
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "$ref": "https://ref.actionschema.com/file-operation.json"
+      }
+    }
+  }
+}

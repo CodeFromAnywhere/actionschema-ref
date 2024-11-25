@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "description": "The file operation details",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["remove", "set", "edit"],
+      "description": "Type of file operation to perform"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to the file being modified"
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": { "type": { "type": "string", "enum": ["remove"] } }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["set"] },
+        "content": {
+          "type": "string",
+          "description": "New content for the file"
+        },
+        "isBase64": {
+          "type": "boolean",
+          "description": "Whether the content is base64 encoded"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to fetch content from"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["edit"] },
+        "edits": {
+          "type": "array",
+          "description": "List of edits to apply to the file",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["insert"]
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "Content to insert"
+                  },
+                  "lineNumber": {
+                    "type": "number",
+                    "description": "Line number to insert before"
+                  }
+                },
+                "required": ["type", "content", "lineNumber"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["remove"]
+                  },
+                  "fromLineNumber": {
+                    "type": "number",
+                    "description": "Start removing from this line"
+                  },
+                  "toLineNumber": {
+                    "type": "number",
+                    "description": "Remove up to but not including this line"
+                  }
+                },
+                "required": ["type", "fromLineNumber", "toLineNumber"]
+              }
+            ]
+          }
+        },
+        "movePath": {
+          "type": "string",
+          "description": "New path to move the file to"
+        }
+      }
+    }
+  ]
+}
