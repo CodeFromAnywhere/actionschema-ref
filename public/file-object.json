@@ -1,7 +1,9 @@
 {
+  "$schema": "https://ref.actionschema.com/actionschema.json",
+  "description": "A file-object describes a file hierarchy in any storage. ",
   "type": "object",
   "additionalProperties": false,
-  "required": ["size", "tree", "files", "diff", "operations"],
+  "required": ["size", "tree", "files"],
   "properties": {
     "size": {
       "type": "object",

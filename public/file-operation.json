@@ -1,25 +1,25 @@
 {
+  "$schema": "https://ref.actionschema.com/actionschema.json",
+  "description": "A file-operation describes an atomic change to a file from a file-object. This can be either a 'remove' operation, a 'set' operation, or an 'edit' operation. This datastructure is optimised for the use with LLMs.",
   "type": "object",
-  "description": "The file operation details",
-  "properties": {
-    "type": {
-      "type": "string",
-      "enum": ["remove", "set", "edit"],
-      "description": "Type of file operation to perform"
-    },
-    "path": {
-      "type": "string",
-      "description": "Path to the file being modified"
-    }
-  },
   "oneOf": [
     {
       "type": "object",
-      "properties": { "type": { "type": "string", "enum": ["remove"] } }
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path to the file being modified"
+        },
+        "type": { "type": "string", "enum": ["remove"] }
+      }
     },
     {
       "type": "object",
       "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path to the file being modified"
+        },
         "type": { "type": "string", "enum": ["set"] },
         "content": {
           "type": "string",
@@ -38,6 +38,10 @@
     {
       "type": "object",
       "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path to the file being modified"
+        },
         "type": { "type": "string", "enum": ["edit"] },
         "edits": {
           "type": "array",
