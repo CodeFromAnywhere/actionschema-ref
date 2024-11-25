@@ -4,6 +4,7 @@
   "type": "object",
   "definitions": {
     "Tree": {
+      "description": "Recursive object that describes the file hierarchy. Null is a leaf file. Folders always contain another tree.",
       "type": "object",
       "additionalProperties": {
         "anyOf": [{ "type": "null" }, { "$ref": "#/definitions/Tree" }]
