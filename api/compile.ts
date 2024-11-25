@@ -17,7 +17,8 @@ export const GET = async (request: Request) => {
     console.log("found json...");
 
     const ts = await compile(json, filename, {
-      declareExternallyReferenced: false,
+      // NB: Problem: if we enable this, it includes all $ref's including via URL. If we disable it, it doesn't even include the ones defined in the same JSON.
+      declareExternallyReferenced: true,
       bannerComment: "",
     });
 

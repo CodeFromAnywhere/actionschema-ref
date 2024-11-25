@@ -2,14 +2,23 @@
   "$schema": "https://ref.actionschema.com/actionschema.json",
   "description": "A file-object describes a file hierarchy in any storage. ",
   "type": "object",
+  "definitions": {
+    "Tree": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [{ "type": "null" }, { "$ref": "#/definitions/Tree" }]
+      }
+    }
+  },
   "additionalProperties": false,
   "required": ["size", "tree", "files"],
   "properties": {
     "size": {
       "type": "object",
+      "additionalProperties": false,
       "properties": { "tokens": { "type": "number" } }
     },
-    "tree": { "type": "object", "additionalProperties": true },
+    "tree": { "$ref": "#/definitions/Tree" },
     "files": {
       "type": "object",
       "additionalProperties": {
