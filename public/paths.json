@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "description": "Inspired by Next.js GetStaticPaths functionality, a paths file can describe possible routes at any location.",
+  "examples": [
+    { "paths": ["cow", "dog", "cat"], "pattern": ":id" },
+    { "paths": ["cow", "dog", "cat"], "pattern": "https://google.com?q=:id" },
+    {
+      "paths": [
+        {
+          "params": [
+            { "animal": "cow", "food": "grass" },
+            { "animal": "dog", "food": ["bone", "dogfood"] },
+            { "animal": "cat", "food": ["milk", "catfood"] },
+            { "animal": null, "food": null }
+          ]
+        }
+      ],
+      "pattern": ":animal/:food"
+    }
+  ],
+  "required": ["paths", "pattern"],
+  "properties": {
+    "paths": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "properties": {
+              "params": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "oneOf": [
+                      { "type": "string" },
+                      { "type": "array", "items": { "type": "string" } },
+                      {
+                        "type": "null",
+                        "description": "Indicates any other path"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pattern": {
+      "type": "string",
+      "description": "Absolute or relative pattern containing :x for each parameter, :id being the default one if paths is a string[]"
+    }
+  }
+}
